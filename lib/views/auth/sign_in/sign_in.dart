@@ -2,9 +2,11 @@
 
 import 'package:chat_app/controllers/auth_controller/auth_controller.dart';
 import 'package:chat_app/services/auth_services/auth_services.dart';
+import 'package:chat_app/services/google_auth_services/google_auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sign_in_button/sign_in_button.dart';
 
 class signIn extends StatelessWidget {
   const signIn({super.key});
@@ -71,7 +73,18 @@ class signIn extends StatelessWidget {
                     Get.snackbar('Sign In Failed !', response);
                   }
                 },
-                child: Text("Sign In"))
+                child: Text("Sign In")),
+            SignInButton(Buttons.google, onPressed: (){
+
+
+GoogleAuthServices.googleAuthServices.signInWithGoogle();
+User? user = AuthService.authService.getCurrentUser();
+
+if (user != null) {
+  Get.offAndToNamed('/home');
+}
+
+            })
           ],
         ),
       ),
