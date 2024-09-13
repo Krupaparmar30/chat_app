@@ -141,27 +141,37 @@ class signUp extends StatelessWidget {
                       onPressed: () {
                         if (controller.txtPassword.text ==
                             controller.txtConfirmPassword.text)
-                          AuthService.authService.createAccountWithEmailAndPassword(
-                              controller.txtEmail.text, controller.txtPassword.text);
-                        UserModalData user = UserModalData(
-                            name: controller.txtName.text,
-                            email: controller.txtEmail.text,
-                            image:
+                          {
+                            AuthService.authService.createAccountWithEmailAndPassword(
+                                controller.txtEmail.text, controller.txtPassword.text);
+                            UserModalData user = UserModalData(
+                                name: controller.txtName.text,
+                                email: controller.txtEmail.text,
+                                image:
                                 "https://cdni.iconscout.com/illustration/premium/thumb/female-user-image-illustration-download-in-svg-png-gif-file-formats--person-girl-business-pack-illustrations-6515859.png?f=webp",
-                            password: controller.txtPassword.text,
-                            phone: controller.txtPhone.text,
-                            token: "-------");
-                        CloudFireStoreServices.cloudFireStoreServices
-                            .insertUserIntoFireStore(user);
-                        Get.back();
 
-                        /////
-                        controller.txtEmail.clear();
-                        controller.txtPassword.clear();
-                        controller.txtName.clear();
-                        controller.txtConfirmPassword.clear();
-                        controller.txtPhone.clear();
+                                phone: controller.txtPhone.text,
+                                token: "-------");
+                            CloudFireStoreServices.cloudFireStoreServices
+                                .insertUserIntoFireStore(user);
+                            Get.offAndToNamed('/home');
+
+                            /////
+                            controller.txtEmail.clear();
+
+                            controller.txtName.clear();
+                            controller.txtConfirmPassword.clear();
+                            controller.txtPhone.clear();
+
+                          }
+                        else {
+                          Get.snackbar('Sign In Failed !', "Password incorrect ");
+                        }
+
+
                       },
+
+
                       child: Text("Sign Up"))
                 ],
               ),

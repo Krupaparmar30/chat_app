@@ -15,14 +15,7 @@ class signIn extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Get.put(AuthController());
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.blue.shade800,
-      //   centerTitle: true,
-      //   title: Text(
-      //     "Sign In",
-      //     style: TextStyle(color: Colors.white),
-      //   ),
-      // ),
+
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
@@ -35,7 +28,7 @@ class signIn extends StatelessWidget {
               children: [
                 SizedBox(height: 150),
             Text(
-                "Login",
+                "Sign In",
                 style: TextStyle(color: Colors.blue.shade800,fontSize: 32,letterSpacing: 1,fontWeight: FontWeight.bold),
               ),
                 SizedBox(height: 50),

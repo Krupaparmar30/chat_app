@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:chat_app/modal/cloud_modal/cloud_modal.dart';
+import 'package:chat_app/services/cloudFireStoreServices/cloudFireStoreServices.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -21,6 +23,14 @@ class GoogleAuthServices {
           idToken: googleSignInAuthentication.idToken);
       UserCredential userCredential =
       await FirebaseAuth.instance.signInWithCredential(authCredential);
+      UserModalData user = UserModalData(
+          name: userCredential.user!.displayName.toString(),
+          email: userCredential.user!.email.toString(),
+          image: userCredential.user!.photoURL.toString(),
+          phone: userCredential.user!.phoneNumber.toString(),
+          token: '------');
+
+CloudFireStoreServices.cloudFireStoreServices.insertUserIntoFireStore(user);
       log(userCredential.user!.email!);
       log(userCredential.user!.photoURL!);
     }
@@ -31,8 +41,7 @@ class GoogleAuthServices {
   }
 
 
-  Future<void> signOutFromGoogle()
-  async {
+  Future<void> signOutFromGoogle() async {
     await googleSignIn.signOut();
   }
 }

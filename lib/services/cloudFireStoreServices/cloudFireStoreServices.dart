@@ -13,8 +13,7 @@ class CloudFireStoreServices {
     fireBaseFireStore.collection("users").doc(user.email).set({
       'name': user.name,
       'email': user.email,
-      'image':user.image,
-      'password': user.password,
+      'image': user.image,
       'phone': user.phone,
       'token': user.token
     });

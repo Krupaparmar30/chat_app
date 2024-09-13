@@ -1,11 +1,11 @@
 class UserModalData {
-  String? name, email,image, password, phone, token;
+  String? name, email,image, phone, token;
 
   UserModalData(
       {required this.name,
       required this.email,
         required this.image,
-      required this.password,
+
       required this.phone,
       required this.token});
 
@@ -14,7 +14,7 @@ class UserModalData {
         name: m1['name'],
         email: m1['email'],
         image: m1['image'],
-        password: m1['password'],
+
         phone: m1['phone'],
         token: m1['token']);
   }
@@ -24,7 +24,6 @@ class UserModalData {
       'name': user.name,
       'email': user.email,
       'image':user.image,
-      'password': user.password,
       'phone': user.phone,
       'token': user.token
     };
