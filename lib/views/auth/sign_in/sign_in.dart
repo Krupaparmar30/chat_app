@@ -15,77 +15,109 @@ class signIn extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Get.put(AuthController());
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue.shade800,
-        centerTitle: true,
-        title: Text("Sign In",style: TextStyle(color: Colors.white),),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: controller.txtEmail,
-              decoration: InputDecoration(
-                  labelText: "Email",
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.black)),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.circular(10))),
-            ),
-            SizedBox(
-              height:20,
-            ),
-            TextField(
-              controller: controller.txtPassword,
-              decoration: InputDecoration(
-                  labelText: "Password",
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(color: Colors.black)),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.circular(10))),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextButton(
-                onPressed: () {
-                  Get.toNamed('/signUp');
-                },
-                child: Text("Dont have Account? Sing up")),
-            ElevatedButton(
-                onPressed: () async {
-                  //user null
-                  String response = await AuthService.authService
-                      .signInWithEmailAndPassword(controller.txtEmail.text,
-                          controller.txtPassword.text);
-                  //user
+      // appBar: AppBar(
+      //   backgroundColor: Colors.blue.shade800,
+      //   centerTitle: true,
+      //   title: Text(
+      //     "Sign In",
+      //     style: TextStyle(color: Colors.white),
+      //   ),
+      // ),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Container(
+          height: 800,
+          width: 500,
+         color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                SizedBox(height: 150),
+            Text(
+                "Login",
+                style: TextStyle(color: Colors.blue.shade800,fontSize: 32,letterSpacing: 1,fontWeight: FontWeight.bold),
+              ),
+                SizedBox(height: 50),
 
+                TextField(
+                  controller: controller.txtEmail,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.email,color: Colors.blue.shade900,),
+                      labelText: "Email",
+                      labelStyle: TextStyle(color: Colors.blue.shade900
+                  ),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(color: Colors.blue.shade900),
+
+                      ),
+                      focusedBorder: OutlineInputBorder(
+
+                          borderSide: BorderSide(color: Colors.blue.shade900),
+                          borderRadius: BorderRadius.circular(10))),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextField(
+                  controller: controller.txtPassword,
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.password,color: Colors.blue.shade900,),
+
+                      labelText: "Password",
+                      labelStyle: TextStyle(color: Colors.blue.shade900
+                      ),
+                          enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(color: Colors.blue.shade900)
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue.shade900),
+                          borderRadius: BorderRadius.circular(10))),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextButton(
+                    onPressed: () {
+                      Get.toNamed('/signUp');
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 100),
+                      child: Text("Dont have Account? Sing up",style: TextStyle(color: Colors.blue.shade900,fontSize: 16)),
+                    )),
+                SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                    onPressed: () async {
+                      //user null
+                      String response = await AuthService.authService
+                          .signInWithEmailAndPassword(controller.txtEmail.text,
+                              controller.txtPassword.text);
+                      //user
+
+                      User? user = AuthService.authService.getCurrentUser();
+                      if (user != null && response == "success") {
+                        Get.offAndToNamed('/home');
+                      } else {
+                        Get.snackbar('Sign In Failed !', response);
+                      }
+                    },
+                    child: Text("Sign In")),
+              Text("Or",style: TextStyle(color: Colors.blue.shade900,fontSize: 22),),
+                SignInButton(Buttons.google, onPressed: () {
+                  GoogleAuthServices.googleAuthServices.signInWithGoogle();
                   User? user = AuthService.authService.getCurrentUser();
-                  if (user != null && response == "success") {
+
+                  if (user != null) {
                     Get.offAndToNamed('/home');
-                  } else {
-                    Get.snackbar('Sign In Failed !', response);
                   }
-                },
-                child: Text("Sign In")),
-            SignInButton(Buttons.google, onPressed: (){
-
-
-GoogleAuthServices.googleAuthServices.signInWithGoogle();
-User? user = AuthService.authService.getCurrentUser();
-
-if (user != null) {
-  Get.offAndToNamed('/home');
-}
-
-            })
-          ],
+                })
+              ],
+            ),
+          ),
         ),
       ),
     );
