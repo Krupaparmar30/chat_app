@@ -1,5 +1,9 @@
+import 'package:chat_app/modal/chat_modal/chat_modal.dart';
 import 'package:chat_app/modal/cloud_modal/cloud_modal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../auth_services/auth_services.dart';
 
 class CloudFireStoreServices {
   CloudFireStoreServices._();
@@ -17,5 +21,45 @@ class CloudFireStoreServices {
       'phone': user.phone,
       'token': user.token
     });
+  }
+
+  Future<DocumentSnapshot<Map<String, dynamic>>>
+      readDataFromCurrentUserFireStore() async {
+    User? user = AuthService.authService.getCurrentUser();
+    return await fireBaseFireStore.collection("users").doc(user!.email).get();
+  }
+
+  Future<QuerySnapshot<Map<String, dynamic>>>
+      readAllFromCurrentFireStore() async {
+    User? user = AuthService.authService.getCurrentUser();
+    return await fireBaseFireStore.collection("users").get();
+  }
+
+  Future<void> addChatInFireStore(ChatModal chat) async {
+    String? sender = chat.sender;
+    String? receiver = chat.receiver;
+    List doc = [sender, receiver];
+
+    doc.sort();
+    String docId = doc.join("_");
+
+    await fireBaseFireStore
+        .collection("chatroom")
+        .doc(docId)
+        .collection("chat")
+        .add(chat.getMap(chat));
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> readChatFromFireStore( String receiver) {
+ String sender=AuthService.authService.getCurrentUser()!.email!;
+    List doc = [sender, receiver];
+    doc.sort();
+    String docId = doc.join("_");
+
+   return fireBaseFireStore
+        .collection("chatroom")
+        .doc(docId)
+        .collection("chat")
+        .snapshots();
   }
 }

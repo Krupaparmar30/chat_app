@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:chat_app/modal/cloud_modal/cloud_modal.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -47,4 +48,8 @@ class AuthService {
     }
     return user;
   }
+
+
+
+
 }
