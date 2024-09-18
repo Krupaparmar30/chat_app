@@ -10,6 +10,7 @@ class ChatController extends GetxController
 
 
   TextEditingController txtMessage=TextEditingController();
+  TextEditingController txtUpDateMessage=TextEditingController();
   void getReceiver(String email,String name)
   {
     receiverName.value=name;

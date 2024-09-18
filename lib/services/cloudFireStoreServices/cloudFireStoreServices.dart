@@ -50,16 +50,32 @@ class CloudFireStoreServices {
         .add(chat.getMap(chat));
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> readChatFromFireStore( String receiver) {
- String sender=AuthService.authService.getCurrentUser()!.email!;
+  Stream<QuerySnapshot<Map<String, dynamic>>> readChatFromFireStore(
+      String receiver) {
+    String sender = AuthService.authService.getCurrentUser()!.email!;
     List doc = [sender, receiver];
     doc.sort();
     String docId = doc.join("_");
 
-   return fireBaseFireStore
+    return fireBaseFireStore
         .collection("chatroom")
         .doc(docId)
         .collection("chat")
+        .orderBy("time", descending: false)
         .snapshots();
+  }
+
+  void updateChatFromFireStore(String receiver, String dcId, String message) {
+    String sender = AuthService.authService.getCurrentUser()!.email!;
+    List doc = [sender, receiver];
+    doc.sort();
+    String docId = doc.join("_");
+
+    fireBaseFireStore
+        .collection("chatroom")
+        .doc(docId)
+        .collection("chat")
+        .doc(dcId)
+        .update({'message': message});
   }
 }
