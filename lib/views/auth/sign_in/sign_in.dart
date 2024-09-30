@@ -19,58 +19,89 @@ class signIn extends StatelessWidget {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
-          height: 800,
+          height: 850,
           width: 500,
-         color: Colors.white,
+
+decoration: BoxDecoration(
+gradient : LinearGradient(colors: RxList([
+Color(0xff0c0f2e),
+Color(0xff292b60),
+
+
+
+]))
+),
+
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
+                // Padding(
+                //   padding: const EdgeInsets.only(right:100),
+                //   child: Container(
+                //     width: 200,
+                //     height: 200,
+                //     decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(100),
+                //       color: Colors.white60
+                //     ),
+                //   ),
+                // ),
+
                 SizedBox(height: 150),
             Text(
                 "Sign In",
-                style: TextStyle(color: Colors.blue.shade800,fontSize: 32,letterSpacing: 1,fontWeight: FontWeight.bold),
+                style: TextStyle(color: Colors.white,fontSize: 32,letterSpacing: 1,fontWeight: FontWeight.bold),
               ),
                 SizedBox(height: 50),
 
-                TextField(
-                  controller: controller.txtEmail,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.email,color: Colors.blue.shade900,),
-                      labelText: "Email",
-                      labelStyle: TextStyle(color: Colors.blue.shade900
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    style: TextStyle(color: Colors.white),
+                    controller: controller.txtEmail,
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.email,color: Colors.white,),
+                        labelText: "Email",
+                        labelStyle: TextStyle(color: Colors.white
+                    ),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: Colors.white),
+                  
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                  
+                            borderSide: BorderSide(color: Colors.white),
+                            borderRadius: BorderRadius.circular(10))),
                   ),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.blue.shade900),
-
-                      ),
-                      focusedBorder: OutlineInputBorder(
-
-                          borderSide: BorderSide(color: Colors.blue.shade900),
-                          borderRadius: BorderRadius.circular(10))),
                 ),
                 SizedBox(
                   height: 20,
                 ),
-                TextField(
-                  controller: controller.txtPassword,
-                  decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.password,color: Colors.blue.shade900,),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    style: TextStyle(color: Colors.white),
 
-                      labelText: "Password",
-                      labelStyle: TextStyle(color: Colors.blue.shade900
-                      ),
-                          enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.blue.shade900)
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue.shade900),
-                          borderRadius: BorderRadius.circular(10))),
+                    controller: controller.txtPassword,
+                    decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.password,color: Colors.white,),
+
+                        labelText: "Password",
+                        labelStyle: TextStyle(color: Colors.white
+                        ),
+                            enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: Colors.white)
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                            borderRadius: BorderRadius.circular(10))),
+                  ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 25,
                 ),
                 TextButton(
                     onPressed: () {
@@ -78,7 +109,7 @@ class signIn extends StatelessWidget {
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(left: 100),
-                      child: Text("Dont have Account? Sing up",style: TextStyle(color: Colors.blue.shade900,fontSize: 16)),
+                      child: Text("Dont have Account? Sing up",style: TextStyle(color: Colors.white,fontSize: 16,letterSpacing:1.0 )),
                     )),
                 SizedBox(
                   height: 20,
@@ -99,7 +130,7 @@ class signIn extends StatelessWidget {
                       }
                     },
                     child: Text("Sign In")),
-              Text("Or",style: TextStyle(color: Colors.blue.shade900,fontSize: 22),),
+              Text("Or",style: TextStyle(color: Colors.white,fontSize: 22),),
                 SignInButton(Buttons.google, onPressed: () {
                   GoogleAuthServices.googleAuthServices.signInWithGoogle();
                   User? user = AuthService.authService.getCurrentUser();
@@ -107,7 +138,8 @@ class signIn extends StatelessWidget {
                   if (user != null) {
                     Get.offAndToNamed('/home');
                   }
-                })
+                }),
+
               ],
             ),
           ),

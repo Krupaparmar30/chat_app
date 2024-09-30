@@ -2,21 +2,28 @@ import 'package:chat_app/modal/cloud_modal/cloud_modal.dart';
 import 'package:chat_app/services/auth_services/auth_services.dart';
 import 'package:chat_app/services/cloudFireStoreServices/cloudFireStoreServices.dart';
 import 'package:chat_app/services/google_auth_services/google_auth_services.dart';
+import 'package:chat_app/services/local_notification_services/local_notification_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/chat_controller/chat_controller.dart';
+import '../../controllers/theme_controller/theme_controller.dart';
 
 var chatController = Get.put(ChatController());
-
 class homePage extends StatelessWidget {
   const homePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       drawer: Drawer(
+backgroundColor: (themeControllerTrue.isDark).value
+    ? Theme.of(context).colorScheme.secondary
+    : Theme.of(context).colorScheme.primary,
         child: FutureBuilder(
           future: CloudFireStoreServices.cloudFireStoreServices
               .readDataFromCurrentUserFireStore(),
@@ -33,23 +40,54 @@ class homePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   DrawerHeader(
+
                       child: CircleAvatar(
+                        backgroundColor: (themeControllerTrue.isDark).value
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.secondary,
                     radius: 50,
                     backgroundImage: NetworkImage(userModalData.image!),
                   )),
-                  Text('${userModalData.email}'),
-                  Text('${userModalData.name}'),
+                  Text('${userModalData.email}',style: TextStyle(color:  (themeControllerTrue.isDark).value
+                      ? Theme.of(context).colorScheme.primary
+                      : Theme.of(context).colorScheme.secondary,),),
+                  Text('${userModalData.name}',style: TextStyle(color:  (themeControllerTrue.isDark).value
+                      ? Theme.of(context).colorScheme.primary
+                      : Theme.of(context).colorScheme.secondary,),),
+
+                  Switch(
+                    value: themeControllerTrue.isDark.value,
+                    onChanged: (value) {
+                      themeControllerTrue.toggleTheme();
+                    },
+                  ),
+
+
+
                 ]);
           },
         ),
       ),
+
       appBar: AppBar(
-        backgroundColor: Colors.blue.shade800,
+        backgroundColor:(themeControllerTrue.isDark).value
+            ? Theme.of(context).colorScheme.secondary
+            : Theme.of(context).colorScheme.primary,
         title: Text(
           "Home Page",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(  color: (themeControllerTrue.isDark).value
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.secondary,),
         ),
         actions: [
+          IconButton(
+              onPressed: () async {
+                 await LocalNotificationServices.notificationServices
+                    .scheduledNotification();
+              },
+              icon: Icon(Icons.notifications,color:  (themeControllerTrue.isDark).value
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).colorScheme.secondary,)),
           IconButton(
               onPressed: () async {
                 await AuthService.authService.signOutUser();
@@ -60,41 +98,14 @@ class homePage extends StatelessWidget {
                   Get.offAndToNamed('/signIn');
                 }
               },
-              icon: Icon(Icons.login_outlined))
+              icon: Icon(Icons.login_outlined,color:  (themeControllerTrue.isDark).value
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).colorScheme.secondary,))
         ],
       ),
-      // body: FutureBuilder(
-      //   future: CloudFireStoreServices.cloudFireStoreServices
-      //       .readAllFromCurrentFireStore(),
-      //   builder: (context, snapshot) {
-      //     List data = snapshot.data!.docs;
-      //     List<UserModalData> userList = [];
-      //
-      //     for (var user in data) {
-      //       user.add(UserModalData.fromMap(user.data()));
-      //     }
-      //     print(userList);
-      //     if (snapshot.hasError) {
-      //       Text(snapshot.error.toString());
-      //     }
-      //     if (snapshot.connectionState == ConnectionState.waiting) {
-      //       return CircularProgressIndicator();
-      //     }
-      //
-      //     return ListView.builder(
-      //       itemBuilder: (context, index) {
-      //         return ListTile(
-      //           leading: CircleAvatar(
-      //             backgroundImage: NetworkImage(userList[index].image!),
-      //           ),
-      //           title: Text(userList[index].name!),
-      //           subtitle: Text(userList[index].email!),
-      //         );
-      //       },
-      //     );
-      //   },
-      // ),
+
       body: FutureBuilder(
+
         future: CloudFireStoreServices.cloudFireStoreServices
             .readAllFromCurrentFireStore(),
         builder: (context, snapshot) {
@@ -111,12 +122,16 @@ class homePage extends StatelessWidget {
             return CircularProgressIndicator();
           }
 
-          return Center(
-              child: ListView.builder(
-            itemCount: userList.length,
-            itemBuilder: (context, index) {
-              return Card(
-                child: ListTile(
+          return Container(
+            color:  (themeControllerTrue.isDark).value
+                ? Theme.of(context).colorScheme.secondary
+                : Theme.of(context).colorScheme.primary,
+            child: Center(
+                child: ListView.builder(
+
+              itemCount: userList.length,
+              itemBuilder: (context, index) {
+                return ListTile(
                   onTap: () {
                     chatController.getReceiver(
                         userList[index].email!, userList[index].name!);
@@ -125,12 +140,18 @@ class homePage extends StatelessWidget {
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage("${userList[index].image}"),
                   ),
-                  title: Text('${userList[index].name}'),
-                  subtitle: Text('${userList[index].email}'),
-                ),
-              );
-            },
-          ));
+                  title: Text('${userList[index].name}',style: TextStyle(color: (themeControllerTrue.isDark).value
+                      ? Theme.of(context).colorScheme.primary
+                      : Theme.of(context).colorScheme.secondary,),),
+                  subtitle: Text('${userList[index].email}',style: TextStyle(
+                    color: (themeControllerTrue.isDark).value
+                        ? Theme.of(context).colorScheme.secondary
+                        : Theme.of(context).colorScheme.primary,
+                  ),),
+                );
+              },
+            )),
+          );
         },
       ),
     );

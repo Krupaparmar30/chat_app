@@ -15,21 +15,23 @@ class signUp extends StatelessWidget {
   Widget build(BuildContext context) {
     var controller = Get.put(AuthController());
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.blue.shade800,
-      //   centerTitle: true,
-      //   title: Text(
-      //     "Sign Up",
-      //     style: TextStyle(color: Colors.white),
-      //   ),
-      // ),
+
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
 
-          height: 760,
+          height: 800,
           width: 500,
-          color: Colors.white,
+
+          decoration: BoxDecoration(
+              gradient : LinearGradient(colors: RxList([
+                Color(0xff0c0f2e),
+                Color(0xff292b60),
+
+
+
+              ]))
+          ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: SingleChildScrollView(
@@ -37,95 +39,106 @@ class signUp extends StatelessWidget {
               child: Column(
                 children: [
 
+
                   SizedBox(height: 120),
                   Text(
                     "Sign up",
-                    style: TextStyle(color: Colors.blue.shade800,fontSize: 32,letterSpacing: 1,fontWeight: FontWeight.bold),
+                    style: TextStyle(color: Colors.white,fontSize: 32,letterSpacing: 1,fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 30),
 
 
                   TextField(
+                    style: TextStyle(color: Colors.white),
+
                     controller: controller.txtName,
                     decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.person,color: Colors.blue.shade900,),
+                        prefixIcon: Icon(Icons.person,color: Colors.white,),
 
                         labelText: "Name",
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.blue.shade900),
+                          borderSide: BorderSide(color: Colors.white),
                         ),
                         focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue.shade900),
+                            borderSide: BorderSide(color: Colors.white),
                             borderRadius: BorderRadius.circular(10))),
                   ),
                   SizedBox(height: 15),
                   TextField(
+                    style: TextStyle(color: Colors.white),
+
                     controller: controller.txtEmail,
                     decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.email,color: Colors.blue.shade900,),
+                        prefixIcon: Icon(Icons.email,color: Colors.white,),
 
                         labelText: "Email",
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.blue.shade900),
+                          borderSide: BorderSide(color: Colors.white),
 
                         ),
                         focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue.shade900),
+                            borderSide: BorderSide(color: Colors.white),
 
                             borderRadius: BorderRadius.circular(10))),
                   ),
                   SizedBox(height: 15),
 
                   TextField(
+                    style: TextStyle(color: Colors.white),
+
                     controller: controller.txtPassword,
                     decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.password,color: Colors.blue.shade900,),
+                        prefixIcon: Icon(Icons.password,color: Colors.white,),
 
                         labelText: "Password",
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.blue.shade900),
+                          borderSide: BorderSide(color: Colors.white),
 
                         ),
                         focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue.shade900),
+                            borderSide: BorderSide(color: Colors.white),
 
                             borderRadius: BorderRadius.circular(10))),
                   ),
                   SizedBox(height: 15),
                   TextField(
+                    style: TextStyle(color: Colors.white),
+
                     controller: controller.txtConfirmPassword,
                     decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.password,color: Colors.blue.shade900,),
+                        prefixIcon: Icon(Icons.password,color: Colors.white,),
 
                         labelText: "ConfirmPassword",
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.blue.shade900),
+                          borderSide: BorderSide(color: Colors.white),
 
                         ),
                         focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue.shade900),
+                            borderSide: BorderSide(color: Colors.white),
 
                             borderRadius: BorderRadius.circular(10))),
                   ),
                   SizedBox(height: 15),
 
                   TextField(
+                    style: TextStyle(color: Colors.white),
+
                     controller: controller.txtPhone,
                     decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.phone,color: Colors.blue.shade900,),
+                        prefixIcon: Icon(Icons.phone,color: Colors.white,),
 
                         labelText: "Phone",
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.blue.shade900),
+                          borderSide: BorderSide(color: Colors.white),
 
                         ),
                         focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue.shade900),
+                            borderSide: BorderSide(color: Colors.white),
 
                             borderRadius: BorderRadius.circular(10))),
                   ),
@@ -136,7 +149,7 @@ class signUp extends StatelessWidget {
                       onPressed: () {
                         Get.back();
                       },
-                      child: Text("Already have Account? Sing in",style: TextStyle(color: Colors.blue.shade900),)),
+                      child: Text("Already have Account? Sing in",style: TextStyle(color: Colors.white),)),
                   ElevatedButton(
                       onPressed: () {
                         if (controller.txtPassword.text ==

@@ -32,7 +32,7 @@ class CloudFireStoreServices {
   Future<QuerySnapshot<Map<String, dynamic>>>
       readAllFromCurrentFireStore() async {
     User? user = AuthService.authService.getCurrentUser();
-    return await fireBaseFireStore.collection("users").get();
+    return await fireBaseFireStore.collection("users").where("email",isNotEqualTo: user!.email).get();
   }
 
   Future<void> addChatInFireStore(ChatModal chat) async {
@@ -52,7 +52,7 @@ class CloudFireStoreServices {
 
   Stream<QuerySnapshot<Map<String, dynamic>>> readChatFromFireStore(
       String receiver) {
-    String sender = AuthService.authService.getCurrentUser()!.email!;
+    String? sender = AuthService.authService.getCurrentUser()!.email;
     List doc = [sender, receiver];
     doc.sort();
     String docId = doc.join("_");
@@ -65,17 +65,30 @@ class CloudFireStoreServices {
         .snapshots();
   }
 
-  void updateChatFromFireStore(String receiver, String dcId, String message) {
+  Future<void> updateChatFromFireStore(String receiver, String dcId, String message) async {
     String sender = AuthService.authService.getCurrentUser()!.email!;
     List doc = [sender, receiver];
     doc.sort();
     String docId = doc.join("_");
 
-    fireBaseFireStore
+ await   fireBaseFireStore
         .collection("chatroom")
         .doc(docId)
         .collection("chat")
         .doc(dcId)
         .update({'message': message});
   }
+
+
+  Future<void> removeChat(String receiver, String dcId)
+  async {
+    String sender = AuthService.authService.getCurrentUser()!.email!;
+    List doc = [sender, receiver];
+    doc.sort();
+    String docId = doc.join("_");
+
+    await fireBaseFireStore.collection("chatroom").doc(docId).collection("chat").doc(dcId).delete();
+
+  }
+
 }
