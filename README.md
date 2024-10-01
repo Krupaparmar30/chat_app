@@ -8,6 +8,17 @@ User Authentication: Easily sign up and log in using email, social media, or pho
 * Push Notifications: Stay updated with real-time notifications for new messages and activity, even when the app is closed.
 * Customizable Profiles: Personalize your profile with avatars and status updates to express yourself.
 - Cross-Platform Access: Available on both iOS and Android, as well as through web browsers, so you can chat anytime, anywhere.
+
+# ChatApp
+
+A real-time chat application built with Firebase.
+
+## Features
+
+- Real-time messaging
+- User authentication
+- Group chat functionality
+
 A new Flutter project.
 
 <img src="https://github.com/user-attachments/assets/ec99ce73-0258-4945-8324-ff3457a21768" height=28% width=32%>
