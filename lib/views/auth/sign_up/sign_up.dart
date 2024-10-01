@@ -20,7 +20,7 @@ class signUp extends StatelessWidget {
         scrollDirection: Axis.vertical,
         child: Container(
 
-          height: 800,
+          height: 900,
           width: 500,
 
           decoration: BoxDecoration(
@@ -40,107 +40,137 @@ class signUp extends StatelessWidget {
                 children: [
 
 
-                  SizedBox(height: 120),
+                  SizedBox(height: 150),
                   Text(
                     "Sign up",
-                    style: TextStyle(color: Colors.white,fontSize: 32,letterSpacing: 1,fontWeight: FontWeight.bold),
+                    style: TextStyle(color: Colors.white,fontSize: 40,letterSpacing: 1,fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 30),
 
 
-                  TextField(
-                    style: TextStyle(color: Colors.white),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      style: TextStyle(color: Colors.white),
 
-                    controller: controller.txtName,
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.person,color: Colors.white,),
+                      controller: controller.txtName,
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.person,color: Colors.white,),
 
-                        labelText: "Name",
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        focusedBorder: OutlineInputBorder(
+                          labelText: "Name",
+                          labelStyle: TextStyle(
+                            color: Colors.white
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(10))),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                              borderRadius: BorderRadius.circular(10))),
+                    ),
                   ),
                   SizedBox(height: 15),
-                  TextField(
-                    style: TextStyle(color: Colors.white),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      style: TextStyle(color: Colors.white),
 
-                    controller: controller.txtEmail,
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.email,color: Colors.white,),
+                      controller: controller.txtEmail,
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.email,color: Colors.white,),
 
-                        labelText: "Email",
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
-
-                        ),
-                        focusedBorder: OutlineInputBorder(
+                          labelText: "Email",
+                          labelStyle: TextStyle(
+                              color: Colors.white
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(color: Colors.white),
 
-                            borderRadius: BorderRadius.circular(10))),
-                  ),
-                  SizedBox(height: 15),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
 
-                  TextField(
-                    style: TextStyle(color: Colors.white),
-
-                    controller: controller.txtPassword,
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.password,color: Colors.white,),
-
-                        labelText: "Password",
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
-
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-
-                            borderRadius: BorderRadius.circular(10))),
-                  ),
-                  SizedBox(height: 15),
-                  TextField(
-                    style: TextStyle(color: Colors.white),
-
-                    controller: controller.txtConfirmPassword,
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.password,color: Colors.white,),
-
-                        labelText: "ConfirmPassword",
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
-
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-
-                            borderRadius: BorderRadius.circular(10))),
+                              borderRadius: BorderRadius.circular(10))),
+                    ),
                   ),
                   SizedBox(height: 15),
 
-                  TextField(
-                    style: TextStyle(color: Colors.white),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      style: TextStyle(color: Colors.white),
 
-                    controller: controller.txtPhone,
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.phone,color: Colors.white,),
+                      controller: controller.txtPassword,
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.password,color: Colors.white,),
 
-                        labelText: "Phone",
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.white),
-
-                        ),
-                        focusedBorder: OutlineInputBorder(
+                          labelText: "Password",
+                          labelStyle: TextStyle(
+                              color: Colors.white
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide(color: Colors.white),
 
-                            borderRadius: BorderRadius.circular(10))),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+
+                              borderRadius: BorderRadius.circular(10))),
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      style: TextStyle(color: Colors.white),
+
+                      controller: controller.txtConfirmPassword,
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.password,color: Colors.white,),
+
+                          labelText: "ConfirmPassword",
+                          labelStyle: TextStyle(
+                              color: Colors.white
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: Colors.white),
+
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+
+                              borderRadius: BorderRadius.circular(10))),
+                    ),
+                  ),
+                  SizedBox(height: 15),
+
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      style: TextStyle(color: Colors.white),
+
+                      controller: controller.txtPhone,
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.phone,color: Colors.white,),
+
+                          labelText: "Phone",
+                          labelStyle: TextStyle(
+                              color: Colors.white
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(color: Colors.white),
+
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+
+                              borderRadius: BorderRadius.circular(10))),
+                    ),
                   ),
                   SizedBox(
                     height: 20,

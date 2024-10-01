@@ -17,6 +17,8 @@ class chatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -26,173 +28,289 @@ class chatPage extends StatelessWidget {
             icon: Icon(
               Icons.arrow_back,
               color: (themeControllerTrue.isDark).value
-                  ? Theme.of(context).colorScheme.primary
-                  : Theme.of(context).colorScheme.secondary,
+                  ? Theme
+                  .of(context)
+                  .colorScheme
+                  .primary
+                  : Theme
+                  .of(context)
+                  .colorScheme
+                  .secondary,
             )),
         backgroundColor: (themeControllerTrue.isDark).value
-            ? Theme.of(context).colorScheme.secondary
-            : Theme.of(context).colorScheme.primary,
+            ? Theme
+            .of(context)
+            .colorScheme
+            .secondary
+            : Theme
+            .of(context)
+            .colorScheme
+            .primary,
         title: Text(
           chatController.receiverName.value,
           style: TextStyle(
             color: (themeControllerTrue.isDark).value
-                ? Theme.of(context).colorScheme.primary
-                : Theme.of(context).colorScheme.secondary,
+                ? Theme
+                .of(context)
+                .colorScheme
+                .primary
+                : Theme
+                .of(context)
+                .colorScheme
+                .secondary,
           ),
         ),
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.phone,
+                color: (themeControllerTrue.isDark).value
+                    ? Theme
+                    .of(context)
+                    .colorScheme
+                    .primary
+                    : Theme
+                    .of(context)
+                    .colorScheme
+                    .secondary,
+              )),
+          IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.video_call_outlined,
+                color: (themeControllerTrue.isDark).value
+                    ? Theme
+                    .of(context)
+                    .colorScheme
+                    .primary
+                    : Theme
+                    .of(context)
+                    .colorScheme
+                    .secondary,
+              ))
+        ],
       ),
       body: Column(
         children: [
           Expanded(
               child: StreamBuilder(
-            stream: CloudFireStoreServices.cloudFireStoreServices
-                .readChatFromFireStore(chatController.receiverEmail.value),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Center(child: Text(snapshot.error.toString()));
-              }
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              List data = snapshot.data!.docs;
-              List<ChatModal> chatList = [];
-              List<String> docList = [];
-              for (QueryDocumentSnapshot snap in data) {
-                docList.add(snap.id);
-                chatList.add(ChatModal.fromMap(snap.data() as Map));
-              }
+                stream: CloudFireStoreServices.cloudFireStoreServices
+                    .readChatFromFireStore(chatController.receiverEmail.value),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Center(child: Text(snapshot.error.toString()));
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  List data = snapshot.data!.docs;
+                  List<ChatModal> chatList = [];
+                  List<String> docList = [];
+                  for (QueryDocumentSnapshot snap in data) {
+                    docList.add(snap.id);
+                    chatList.add(ChatModal.fromMap(snap.data() as Map));
+                  }
 
-              return Container(
-                // decoration: BoxDecoration(
+                  return Container(
+                    // decoration: BoxDecoration(
                     color: (themeControllerTrue.isDark).value
-                        ? Theme.of(context).colorScheme.secondary
-                        : Theme.of(context).colorScheme.primary,
+                        ? Theme
+                        .of(context)
+                        .colorScheme
+                        .secondary
+                        : Theme
+                        .of(context)
+                        .colorScheme
+                        .primary,
 
-
-                child: SingleChildScrollView(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: List.generate(
-                          chatList.length,
-                          (index) => Align(
-                                alignment: (chatList[index].sender ==
+                    child: SingleChildScrollView(
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: List.generate(
+                              chatList.length,
+                                  (index) =>
+                                  Align(
+                                    alignment: (chatList[index].sender ==
                                         AuthService.authService
                                             .getCurrentUser()!
                                             .email)
-                                    ? Alignment.centerRight
-                                    : Alignment.centerLeft,
-                                child: GestureDetector(
-                                  onLongPress: () {
-                                    if (chatList[index].sender ==
-                                        AuthService.authService
-                                            .getCurrentUser()!
-                                            .email) {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          return AlertDialog(
-                                            title: Text("Update"),
-                                            content: TextField(
-                                              controller:
-                                                  chatController.txtUpDateMessage,
-                                            ),
-                                            actions: [
-                                              TextButton(
-                                                  onPressed: () {
-                                                    String dcId = docList[index];
-                                                    CloudFireStoreServices
-                                                        .cloudFireStoreServices
-                                                        .updateChatFromFireStore(
-                                                            chatController
-                                                                .receiverEmail
-                                                                .value,
-                                                            dcId,
-                                                            chatController
-                                                                .txtUpDateMessage
-                                                                .text);
-                                                    Get.back();
-                                                  },
-                                                  child: Text("Update")),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    }
-                                  },
-                                  onDoubleTap: () {
-                                    if (chatList[index].sender ==
-                                        AuthService.authService
-                                            .getCurrentUser()!
-                                            .email!) {
-                                      CloudFireStoreServices
-                                          .cloudFireStoreServices
-                                          .removeChat(docList[index],
-                                              chatController.receiverEmail.value);
-                                    }
-                                  },
-                                  child: Container(
-                  constraints:BoxConstraints(
-                    maxWidth: 100,
-                  ),
-                  
-                                    alignment: (chatList[index].sender ==
-                                            AuthService.authService
-                                                .getCurrentUser()!
-                                                .email!)
                                         ? Alignment.centerRight
                                         : Alignment.centerLeft,
-                                    margin: EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 1,
-                                    ),
-                                    decoration: BoxDecoration(
-                                        color: (chatList[index].sender ==
-                                                AuthService.authService
-                                                    .getCurrentUser()!
-                                                    .email
-                                            ? Colors.blue.shade50
-                                            : Colors.white),
-                                        borderRadius: (chatList[index].sender ==
-                                                AuthService.authService
-                                                    .getCurrentUser()!
-                                                    .email)
-                                            ? const BorderRadius.only(
-                                                topLeft: Radius.circular(10),
-                                                topRight: Radius.circular(10),
-                                                bottomLeft: Radius.circular(10))
-                                            : const BorderRadius.only(
-                                                topLeft: Radius.circular(10),
-                                                topRight: Radius.circular(10),
-                                                bottomRight:
-                                                    Radius.circular(10))),
-                                    child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: (chatList[index].image!.isEmpty &&
-                                                chatList[index].image == "")
-                                            ? Text(
-                                                chatList[index].message!,
-                                                style: TextStyle(
-                                                    color: (chatList[index]
-                                                                .sender ==
-                                                            AuthService
-                                                                .authService
-                                                                .getCurrentUser()!
-                                                                .email
-                                                        ? Colors.blue.shade900
-                                                        : Colors.black),
-                                                    fontSize: 15),
-                                              )
-                                            : Image.network(
-                                                chatList[index].image!,
-                                                height: 100,
+                                    child: GestureDetector(
+
+                                      onTap: () {
+                                        if (chatList[index].sender ==
+                                            AuthService.authService
+                                                .getCurrentUser()!.email) {
+                                          chatController.txtUpDateMessage =
+                                              TextEditingController(
+                                                  text: chatList[index]
+                                                      .message);
+                                          print("dftgyhu");
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                title: Text("Update"),
+                                                content: TextField(
+                                                  controller: chatController
+                                                      .txtUpDateMessage,
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      String dcId = docList[index];
+                                                      CloudFireStoreServices
+                                                          .cloudFireStoreServices
+                                                          .updateChatFromFireStore(
+                                                          chatController
+                                                              .receiverEmail
+                                                              .value,
+                                                          dcId,
+                                                          chatController
+                                                              .txtUpDateMessage
+                                                              .text);
+                                                      Get.back();
+                                                    },
+                                                    child: Text("Update"),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        }
+                                      },
+                                      onDoubleTap: () {
+                                        CloudFireStoreServices
+                                            .cloudFireStoreServices.removeChat(
+                                            chatController.receiverEmail.value,
+                                            docList[index]);
+                                      },
+                                      child: Container(
+
+                                        width: 200,
+                                          alignment: (chatList[index].sender ==
+                                              AuthService.authService
+                                                  .getCurrentUser()!
+                                                  .email!)
+                                              ? Alignment.centerRight
+                                              : Alignment.centerLeft,
+                                          margin: EdgeInsets.symmetric(
+                                            horizontal: 2,
+                                            vertical: 1,
+                                          ),
+
+                                          decoration: BoxDecoration(
+                                              color: (chatList[index].sender ==
+                                                  AuthService.authService
+                                                      .getCurrentUser()!
+                                                      .email!
+                                                  ? Colors.blue.shade50
+                                                  : Colors.white),
+                                              borderRadius: (chatList[index]
+                                                  .sender ==
+                                                  AuthService.authService
+                                                      .getCurrentUser()!
+                                                      .email!)
+                                                  ? const BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(10),
+                                                  bottomLeft:
+                                                  Radius.circular(10))
+                                                  : const BorderRadius.only(
+                                                  topLeft: Radius.circular(10),
+                                                  topRight: Radius.circular(10),
+                                                  bottomRight: Radius.circular(
+                                                      10))),
+
+                                          child: (chatList[index].image!
+                                              .isEmpty &&
+                                              chatList[index].image == "")
+                                              ? Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 15, top: 5, right: 10, bottom: 5),
+                                              child: Text.rich(
+                                                  TextSpan(children: [
+                                                    TextSpan(
+                                                      text:
+                                                      chatList[index].message!,
+                                                      style: TextStyle(
+                                                          color: (chatList[index]
+                                                              .sender ==
+                                                              AuthService
+                                                                  .authService
+                                                                  .getCurrentUser()!
+                                                                  .email
+                                                              ? Colors.blue
+                                                              .shade900
+                                                              : Colors.black),
+                                                          fontSize: 15),
+                                                    ),
+                                                    TextSpan(
+                                                        text:
+                                                        "\t\t${(chatList[index]
+                                                            .time!.toDate()
+                                                            .hour > 9 &&
+                                                            chatList[index]
+                                                                .time!.toDate()
+                                                                .hour < 24)
+                                                            ? (chatList[index]
+                                                            .time!.toDate()
+                                                            .hour % 12)
+                                                            : '0${(chatList[index]
+                                                            .time!.toDate()
+                                                            .hour)}'} : ${(chatList[index]
+                                                            .time!.toDate()
+                                                            .minute > 9)
+                                                            ? (chatList[index]
+                                                            .time!.toDate()
+                                                            .minute)
+                                                            : '0${(chatList[index]
+                                                            .time!.toDate()
+                                                            .minute)}'} ",
+                                                        style: TextStyle(
+                                                            fontSize: 10,
+                                                            color: Colors
+                                                                .blue
+                                                                .shade900)),
+                                                    TextSpan(
+                                                        text: (chatList[index]
+                                                            .time!
+                                                            .toDate()
+                                                            .hour >
+                                                            12)
+                                                            ? 'PM'
+                                                            : 'AM',
+                                                        style: TextStyle(
+                                                            fontSize: 10,
+                                                            color: Colors
+                                                                .blue
+                                                                .shade900)),
+                                                  ])))
+                                              : Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child:Container(
+
+                                                  height: height * 0.3,
+                                                  width: width * 0.4,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(image: NetworkImage(
+
+                                                      chatList[index].image!,
+
+
+
+                                                    ),)
+                                                  ),
+                                                )
                                               )),
-                                  ),
-                                ),
-                              ))),
-                ),
-              );
-            },
-          )),
+                                    ),
+                                  ))),
+                    ),
+                  );
+                },
+              )),
           TextField(
             controller: chatController.txtMessage,
             decoration: InputDecoration(
@@ -231,10 +349,10 @@ class chatPage extends StatelessWidget {
 
                           LocalNotificationServices.notificationServices
                               .showNotificationServices(
-                                  AuthService.authService
-                                      .getCurrentUser()!
-                                      .email!,
-                                  chatController.txtMessage.text);
+                              AuthService.authService
+                                  .getCurrentUser()!
+                                  .email!,
+                              chatController.txtMessage.text);
                         },
                         icon: Icon(Icons.send)),
                   ],
@@ -245,19 +363,3 @@ class chatPage extends StatelessWidget {
     );
   }
 }
-
-// decoration: BoxDecoration(
-// gradient: LinearGradient(colors: RxList([
-// Color(0xff0c0f2e),
-// Color(0xff292b60),
-// Color(0xff344070),
-// Color(0xff070b29),
-//Color(0xff342463),
-//Color(0xff3c4172)
-//Color(0xff576aac)
-//
-//
-//
-//
-// ]))
-// ),

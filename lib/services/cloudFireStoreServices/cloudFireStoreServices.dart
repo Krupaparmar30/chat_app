@@ -87,7 +87,11 @@ class CloudFireStoreServices {
     doc.sort();
     String docId = doc.join("_");
 
-    await fireBaseFireStore.collection("chatroom").doc(docId).collection("chat").doc(dcId).delete();
+    await fireBaseFireStore
+        .collection("chatroom")
+        .doc(docId)
+        .collection("chat")
+        .doc(dcId).delete();
 
   }
 

@@ -19,7 +19,7 @@ class signIn extends StatelessWidget {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
-          height: 850,
+          height: 900,
           width: 500,
 
 decoration: BoxDecoration(
@@ -48,10 +48,10 @@ Color(0xff292b60),
                 //   ),
                 // ),
 
-                SizedBox(height: 150),
+                SizedBox(height: 200),
             Text(
                 "Sign In",
-                style: TextStyle(color: Colors.white,fontSize: 32,letterSpacing: 1,fontWeight: FontWeight.bold),
+                style: TextStyle(color: Colors.white,fontSize: 40,letterSpacing: 1,fontWeight: FontWeight.bold),
               ),
                 SizedBox(height: 50),
 

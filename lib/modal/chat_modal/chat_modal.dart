@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatModal {
   String? sender, receiver, message, image;
-  Timestamp time;
+  Timestamp? time;
 
   ChatModal(
       {required this.sender,

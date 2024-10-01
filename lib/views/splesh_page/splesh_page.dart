@@ -9,7 +9,7 @@ class spleshScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onDoubleTap: () {
-        Get.offAllNamed('/authmanager');
+        Get.offAllNamed('/intro');
       },
       child: Container(
         height: 700,
